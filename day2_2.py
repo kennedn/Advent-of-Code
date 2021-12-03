@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
-
+from file_handler import advent_opener
 
 @dataclass
 class Direction:
     direction: str
     amount: int
 
+lines = advent_opener('day2.txt')
+
 directions = []
-with open('day2.txt') as f:
-    while True:
-        l = f.readline()
-        if l == '':
-            break
-        directions.append(Direction(l.split(" ")[0], int(l.split(" ")[1])))
+for line in lines:
+    directions.append(Direction(line.split(" ")[0], int(line.split(" ")[1])))
+
 
 x_axis = 0
 aim = 0
