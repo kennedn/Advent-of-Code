@@ -16,7 +16,7 @@ def eliminator(array, bit_length, one_most_common):
             most_common = 1 if one_most_common else 0
         else:
             most_common = 0 if one_most_common else 1
-        elim_vals = [v for i, v in enumerate(elim_vals) if (v >> shift) & 0x01 != most_common]
+        elim_vals = [v for v in elim_vals if (v >> shift) & 0x01 != most_common]
         if(len(elim_vals) == 1):
             return elim_vals[0]
 
