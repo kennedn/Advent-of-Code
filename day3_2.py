@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from file_handler import advent_opener
+from file_handler import advent_opener, advent_downloader
 
-lines = advent_opener('day3_example.txt')
+lines = advent_downloader(3)
 
 length = len(lines[0]) - 1
 vals = [int(b, 2) for b in lines]
