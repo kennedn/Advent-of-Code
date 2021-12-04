@@ -36,14 +36,10 @@ for num in drawn_numbers:
                         winner_idxs.append(i)
 
     if len(winner_idxs) > 0:
-        # Construct new board array, removing previous winners for next number draw
-        temp_boards = boards
-        boards = []
-        for i, board in enumerate(temp_boards):
-            if i not in winner_idxs:
-                boards.append(board)
         # Store last winner from current number draw
-        winner_board = temp_boards[winner_idxs[-1]]
+        winner_board = boards[winner_idxs[-1]]
+        # Construct new board array, removing previous winners for next number draw
+        boards = [b for i, b in enumerate(boards) if i not in winner_idxs]
         winner_idxs = []
 
 # Flatten remaining numbers and sum them. Divide by 2 because both rows and columns are present
