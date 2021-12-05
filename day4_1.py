@@ -39,6 +39,6 @@ def first_board():
 
 last_num, winner = first_board()
 winner_sum = int(sum([item for sub in winner for item in sub]) / 2)
-print(f"{last_num} * {winner_sum} = {last_num*winner_sum}")
+print(f"{last_num * winner_sum = }")
 
 
