@@ -23,12 +23,10 @@ def line_to_points(line):
         lower, upper = (x1,x2) if x1 < x2 else (x2,x1)
         return [[point, y1] for point in range(lower, upper + 1)]
     else:
-        assert abs(x1-x2) == abs(y1-y2) # Should all be 45 degree diagonals
         distance = abs(x1-x2)
         xmod = 1 if x1 < x2 else -1
         ymod = 1 if y1 < y2 else -1
-        ret_points = [[x1 + (r*xmod), y1 + (r*ymod)] for r in range(distance + 1)]
-        return ret_points
+        return [[x1 + (r*xmod), y1 + (r*ymod)] for r in range(distance + 1)]
 
 
 points_dict = {}
