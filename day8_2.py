@@ -58,30 +58,30 @@ def derive_numbers(wire_map, scrambled_numbers):
     permutations = [{v:k for k,v in dict.items()} for dict in permutations]
     # Filter out duds (those that had duplicate values before inversion) 
     permutations = [dict for dict in permutations if len(dict.keys()) == 7]
-    for m in permutations:
-        ret_nums = []
+    for lookup_table in permutations:
+        decoded_numbers = []
         for num in scrambled_numbers:
-            decoded_number = ''.join(sorted([m[c] for c in num]))
+            decoded_number = ''.join(sorted([lookup_table[c] for c in num]))
             if decoded_number in digits:
-                ret_nums.append(digits[decoded_number])
+                decoded_numbers.append(digits[decoded_number])
                 continue
-        if len(ret_nums) == 4:
-            return int(''.join([str(n) for n in ret_nums]))
+        if len(decoded_numbers) == 4:
+            return int(''.join([str(n) for n in decoded_numbers]))
     raise Exception("Something went wrong")
 
 # raw = advent_opener("day_8_example.txt")
 # raw = advent_opener("day_8_example_short.txt")
 raw = advent_downloader(8)
 segment_list = [l.split('|') for l in raw]
-for i, segment in enumerate(segment_list):
-    for j, s in enumerate(segment):
+for i, segments in enumerate(segment_list):
+    for j, s in enumerate(segments):
         segment_list[i][j] = s.replace("\n", "").strip().split(" ")
 
 unique_lengths = get_unique_lengths(length_map)
 solve_sum = 0
-for segment, output in segment_list:
+for segments, output in segment_list:
     _wire_map = dict(wire_map)
-    for digit in segment:
+    for digit in segments:
         digit_length = len(digit)
         # Use known digits (with unique length) to partially solve wire_map
         if digit_length in unique_lengths:
