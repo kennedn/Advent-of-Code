@@ -9,7 +9,7 @@ target_max = max(crabs)
 min_fuel = inf
 min_target = inf
 for target in range(target_max + 1):
-    fuel = sum([i for c in crabs for i in range(abs(target - c) + 1)])
+    fuel = sum([list(range(abs(target - c) + 1)) for c in crabs])
     if fuel < min_fuel:
         min_fuel = fuel
         min_target = target
