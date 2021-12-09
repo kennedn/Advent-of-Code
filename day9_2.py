@@ -49,20 +49,20 @@ class CavePoint:
         return self.height + 1
 
     @property
-    def basin_set(self):
+    def basin_size(self):
         if not self.is_lowest:
             return 0
-        return self._basin_size(self)
+        return len(self._basin_set(self))
 
-    def _basin_size(self,cave_point, count=None):
-        if count is None: 
-            count = set()
-        count.add((cave_point.x_pos, cave_point.y_pos))
+    def _basin_set(self,cave_point, points=None):
+        if points is None: 
+            points = set()
+        points.add((cave_point.x_pos, cave_point.y_pos))
         bigger_neighbours = [n for n in cave_point.neighbours.values() 
                              if cave_point.height < n.height < 9]
         for n in bigger_neighbours:
-            count = self._basin_size(n, count)
-        return count
+            points = self._basin_set(n, points)
+        return points
 
 def lerp_color(color1, color2, scaler):
     color = []
@@ -70,8 +70,8 @@ def lerp_color(color1, color2, scaler):
         color.append(int((c1 - c2) * scaler + c2))
     return color
 
-deep = [0, 0, 0]
-shallow = [255, 255, 255]
+deep = [50, 0, 0]
+shallow = [0, 0, 255]
 def cave_to_png(rows):
     rgb_pixels = []
     width = len(rows[0])
@@ -82,6 +82,7 @@ def cave_to_png(rows):
             for c in color:
                 rgb_pixels.append(c)
     img = Image.frombytes('RGB', (width, height), bytes(rgb_pixels))
+    img = img.resize((width*4,height*4))
     fd, path = tempfile.mkstemp()
     with os.fdopen(fd, "w") as f:
         f.write(ImageShow._viewers[0].save_image(img))
@@ -92,28 +93,12 @@ def cave_to_png(rows):
 
 
 basins = []
-basin_points = set()
-cave_points = []
 for y, row in enumerate(rows):
     for x, height in enumerate(row):
         c = CavePoint(x, y, rows)
-        cave_points.append(c)
         if c.is_lowest:
-            basin_set = c.basin_set
-            basin_points.update(basin_set)
-            basins.append(len(basin_set))
+            basins.append(c.basin_size)
 
-for cp in cave_points:
-    if cp.x_pos % len(rows[0]) == 0:
-        print()
-    if cp.is_lowest:
-        print(f"{yellow}{cp.height}{reset}", end="")
-    elif (cp.x_pos, cp.y_pos) in basin_points:
-        print(f"{red}{cp.height}{reset}", end="")
-    else:
-        print(f"{cp.height}", end="")
-        
-print()
 top_three = sorted(basins)[-3:]
 top_three_str = ' * '.join(map(str, top_three))
 print(f"{top_three_str} = {math.prod(top_three)}")
