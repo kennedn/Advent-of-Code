@@ -78,11 +78,10 @@ def cave_to_png(rows):
     height = len(rows)
     for y, row in enumerate(rows):
         for x, val in enumerate(row):
-            color = lerp_color(shallow, deep, val/9)
-            for c in color:
-                rgb_pixels.append(c)
+            rgb_pixels.extend(lerp_color(shallow, deep, val/9))
+
     img = Image.frombytes('RGB', (width, height), bytes(rgb_pixels))
-    img = img.resize((width*4,height*4))
+    img = img.resize((width * 4,height * 4))
     fd, path = tempfile.mkstemp()
     with os.fdopen(fd, "w") as f:
         f.write(ImageShow._viewers[0].save_image(img))
