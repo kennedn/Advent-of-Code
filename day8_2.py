@@ -69,9 +69,9 @@ def derive_numbers(wire_map, scrambled_numbers):
             return int(''.join([str(n) for n in decoded_numbers]))
     raise Exception("Something went wrong")
 
-# raw = advent_opener("day_8_example.txt")
+raw = advent_opener("day_8_example.txt")
 # raw = advent_opener("day_8_example_short.txt")
-raw = advent_downloader(8)
+# raw = advent_downloader(8)
 segment_list = [l.split('|') for l in raw]
 for i, segments in enumerate(segment_list):
     for j, s in enumerate(segments):
@@ -81,20 +81,21 @@ unique_lengths = get_unique_lengths(length_map)
 solve_sum = 0
 for segments, output in segment_list:
     _wire_map = dict(wire_map)
-    for digit in segments:
-        digit_length = len(digit)
+    for digit_segments in segments:
+        digit_length = len(digit_segments)
         # Use known digits (with unique length) to partially solve wire_map
         if digit_length in unique_lengths:
             unscrambled_digit_map = digits_invert[length_map_invert[digit_length]]
-            # For each segment in unscrambled digit map, 
-            # filter out segments that DO NOT occur in the scrambled digit
-            for c in unscrambled_digit_map:
-                _wire_map[c] = ''.join([s for s in _wire_map[c] if s in digit])
+            for c in 'abcdefg':
+                # For each segment in unscrambled digit map, 
+                # filter out segments that DO NOT occur in the scrambled digit
+                if c in unscrambled_digit_map:
+                    _wire_map[c] = ''.join([s for s in _wire_map[c] if s in digit_segments])
+                # For each segment NOT in unscrambled digit map, 
+                # filter out segments that DO occur in the scrambled digit 
+                else:
+                    _wire_map[c] = ''.join([s for s in _wire_map[c] if s not in digit_segments])
 
-            # For each segment NOT in unscrambled digit map, 
-            # filter out segments that DO occur in the scrambled digit 
-            for c in reverse_digit_map(unscrambled_digit_map):
-                _wire_map[c] = ''.join([s for s in _wire_map[c] if s not in digit])
     solve_sum += derive_numbers(_wire_map, output)
 print(solve_sum)
 
