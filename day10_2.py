@@ -14,13 +14,11 @@ closure_map = {
     ']': '['
 }
 
-closure_map_rev = {v:k for k,v in closure_map.items()}
-
 points_map = {
-    ')': 1,
-    ']': 2,
-    '}': 3,
-    '>': 4
+    '(': 1,
+    '[': 2,
+    '{': 3,
+    '<': 4
 }
 
 def calc_points(line):
@@ -44,7 +42,7 @@ for line in lines:
                 opener_stack = [] # corrupted
                 break
     if len(opener_stack) > 0:
-        corrupted_lines.append(list(reversed([closure_map_rev[c] for c in opener_stack])))
+        corrupted_lines.append(opener_stack[::-1])
 
 corrupted_lines = sorted([calc_points(l) for l in corrupted_lines])
 print(corrupted_lines[(len(corrupted_lines) - 1) // 2])
