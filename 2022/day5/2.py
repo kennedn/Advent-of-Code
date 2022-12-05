@@ -15,11 +15,7 @@ moves = [re.findall(r'\d{1,2}', r) for r in rows[10::]]
 moves = [[int(m[0]), int(m[1])-1, int(m[2])-1] for m in moves]
 
 def print_top_crates():
-  s = ""
-  for c in crates:
-    if len(c) > 0:
-      s += c[-1]
-  print(s)
+  print(''.join([c[-1] for c in crates]))
 
 def move_crates(qnty, src, dest):
   stack = []
