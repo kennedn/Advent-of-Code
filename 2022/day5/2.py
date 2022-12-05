@@ -14,7 +14,7 @@ separator = next(i for i,r in enumerate(rows) if r == "")
 crates = [re.findall(r'\[([A-Z])\]|\s\s\s\s', r) for r in rows[:separator-1]]
 crates = [[c for c in r if c] for r in list(map(list,zip(*crates[::-1])))]
 
-moves = [re.findall(r'\d{1,2}', r) for r in rows[separator+1::]]
+moves = [re.findall(r'\d+', r) for r in rows[separator+1::]]
 moves = [[int(m[0]), int(m[1])-1, int(m[2])-1] for m in moves]
 
 def print_top_crates():
