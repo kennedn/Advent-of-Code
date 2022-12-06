@@ -14,10 +14,10 @@ stream = [r.strip("\n") for r in advent_downloader(6)][0]
 processed = ""
 for s in stream:
   processed += s
-  if len(processed) < 14 : continue
+  if len(processed) < 4 : continue
 
-  last_4 = set(processed[-14:])
-  if len(last_4) == 14:
+  last_4 = set(processed[-4:])
+  if len(last_4) == 4:
     break
 
 print(len(processed))
