@@ -25,7 +25,6 @@ def process_line(line):
 
   file = re.match('^(\d+) ([a-z\.]+)', line)
   if file:
-    print(path, file[1], file[2])
     storage.append({
       'path': path[:],
       'size': int(file[1]),
@@ -35,7 +34,6 @@ def process_line(line):
 
   folder = re.match('^dir ([a-z]+)', line)
   if folder:
-    print(path,"dir", folder[1])
     storage.append({
       'path': path[:],
       'size': -1,
@@ -54,7 +52,7 @@ for l in lines:
   process_line(l)
 free = 70000000 - folder_size(['/'])
 targets = []
-for folder in [s.split(".") for s in list(set([".".join(s['path']) for s in storage]))]:
+for folder in [list(s) for s in list(set([tuple(s['path']) for s in storage]))]:
   size = folder_size(folder)
   if size + free >= 30000000:
     targets.append(size)
