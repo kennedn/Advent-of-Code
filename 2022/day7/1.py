@@ -53,7 +53,7 @@ for l in lines:
 
 limit = 100000
 count = 0
-for folder in [list(s) for s in set([tuple(s['path']) for s in storage])]:
+for folder in [list(s) for s in {tuple(s['path']) for s in storage}]:
   size = folder_size(folder)
   if size <= limit:
     count += size
