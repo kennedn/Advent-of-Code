@@ -10,7 +10,6 @@ lines = [r.strip("\n") for r in advent_downloader(7)]
 
 path = []
 storage = []
-folder_sizes = []
 
 def process_line(line):
   global path
