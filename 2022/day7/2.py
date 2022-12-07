@@ -52,7 +52,7 @@ for l in lines:
   process_line(l)
 free = 70000000 - folder_size(['/'])
 targets = []
-for folder in [list(s) for s in list(set([tuple(s['path']) for s in storage]))]:
+for folder in [list(s) for s in set([tuple(s['path']) for s in storage])]:
   size = folder_size(folder)
   if size + free >= 30000000:
     targets.append(size)
