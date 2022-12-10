@@ -11,19 +11,15 @@ moves = [re.match(r'(?P<op>\w+) ?(?P<x>[-]?\d+)?', r.strip("\n")) for r in adven
 cycle = 0
 def tick(x_reg):
   global cycle
-  cycle += 1
-  found = False
-  for x in [x_reg - 1, x_reg, x_reg + 1]:
-    if x != (cycle - 1) % 40: continue
-    found = True
-    
-  if found:
+  if x_reg - 1 <= cycle % 40 <= x_reg + 1: 
     print('#', end="")
   else:
     print(' ', end="")
+  
+  cycle += 1
+
   if cycle % 40 == 0:
     print()
-
 
 x_reg = 1
 for m in moves:
