@@ -26,7 +26,7 @@ for m in moves:
 knots = [[0,0] for i in range(10)]
 tail_visits = set()
 tail_visits.add((0,0))
-for j,d in enumerate(deltas):
+for d in enumerate(deltas):
   for i in range(len(knots)):
     if i == 0:
       knots[i] = [knots[i][0] + d[0], knots[i][1] + d[1]]
