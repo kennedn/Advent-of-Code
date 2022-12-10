@@ -8,8 +8,6 @@ import re
 moves = [re.match(r'(?P<op>\w+) ?(?P<x>[-]?\d+)?', r.strip("\n")) for r in advent_downloader(10)]
 # moves = [re.match(r'(?P<op>\w+) ?(?P<x>[-]?\d+)?', r.strip("\n")) for r in advent_opener('e.txt')]
 
-# screen = [str(i % 10) for i in range(241)]
-screen = ['.' for i in range(241)]
 cycle = 0
 def tick(x_reg):
   global cycle
@@ -31,7 +29,7 @@ x_reg = 1
 for m in moves:
   tick(x_reg)
 
-  if m['op'] == 'noop':
+  if m['op']  == 'noop':
     continue
 
   tick(x_reg)
